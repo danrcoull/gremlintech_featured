@@ -1,0 +1,6 @@
+{
+    "name": "gremlintech/featured",
+    "type": "magento-module",
+    "minimum-stability": "dev",
+    "require": {}
+}

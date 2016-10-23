@@ -12,13 +12,13 @@
         $collection = $this->getProductCollection($this->getGender());
         if($count = count($collection) > 0) :
         ?>
-            <ul class="products-grid slider-2" id="<?php echo ($this->getGender() == 'Male') ? 'men-new' : 'women-new'; ?>" data-equalizer>
+            <div class="products-grid slider-2" id="<?php echo ($this->getGender() == 'Male') ? 'men-new' : 'women-new'; ?>" data-equalizer>
         <?php
         foreach ($collection as $_product) :
 
             $producthelper = Mage::helper('catalog/output');
             ?>
-            <li class="new-item item">
+            <div class="new-item item">
                 <div class="wrapper">
                     <a href="<?php echo $_product->getProductUrl() ?>" class="product-image"
                        title="View <?php echo $_product->getName() ?> online">
@@ -65,9 +65,9 @@
                             </ul>
                         </div>
                     </div>
-            </li>
+            </div>
         <?php endforeach; ?>
-    </ul>
+    </div>
         <?php else : ?>
             <p class="error">No Products in this collection</p>
         <?php endif; ?>

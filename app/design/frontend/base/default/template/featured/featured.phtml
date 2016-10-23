@@ -36,12 +36,12 @@ $cats = $this->getCategories();
                     $collection = $this->getProductCollection($_category->getId());
                     if($count = count($collection) > 0):
                     ?>
-                    <ul class="products-grid" data-equalizer>
+                    <div class="products-grid products-grid--max-5-col" data-equalizer>
                         <?php
                         foreach ($collection as $_product) :
                             $producthelper = Mage::helper('catalog/output');
                             ?>
-                            <li class="featured-item item">
+                            <div class="featured-item item">
                                 <div class="wrapper">
                                     <a href="<?php echo $_product->getProductUrl() ?>" class="product-image"
                                        title="View <?php echo $_product->getName() ?> online">
@@ -88,9 +88,9 @@ $cats = $this->getCategories();
                                             </ul>
                                         </div>
                                     </div>
-                            </li>
+                            </div>
                         <?php endforeach; ?>
-                    </ul>
+                    </div>
                     <?php else : ?>
                         <p class="error">No Products in this collection</p>
                     <?php endif; ?>

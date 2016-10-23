@@ -36,7 +36,7 @@ $cats = $this->getCategories();
                     $collection = $this->getProductCollection($_category->getId());
                     if($count = count($collection) > 0):
                     ?>
-                    <ul class="products-grid slider-5" data-equalizer>
+                    <ul class="products-grid" data-equalizer>
                         <?php
                         foreach ($collection as $_product) :
                             $producthelper = Mage::helper('catalog/output');

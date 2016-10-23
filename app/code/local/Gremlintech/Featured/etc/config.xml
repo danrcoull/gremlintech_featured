@@ -6,15 +6,6 @@
     </Gremlintech_Featured>
   </modules>
   <frontend>
-    <routers>
-      <featured>
-        <use>standard</use>
-          <args>
-            <module>Gremlintech_Featured</module>
-            <frontName>sales</frontName>
-          </args>
-      </featured>
-    </routers>
 		<layout>
 		  <updates>
 			<featured>

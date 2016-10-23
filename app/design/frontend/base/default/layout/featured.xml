@@ -1,17 +1,38 @@
-<?xml version="1.0"?>   
+<?xml version="1.0"?>
 <layout version="0.1.0">
-  <default>
-    <reference name="head">
-      <action method="addItem"><type>skin_js</type><name>js/slick.min.js</name></action>
-    </reference>
-  </default>
-  <featured_index_index>   
-    <reference name="root">   
-      <action method="setTemplate"><template>page/1column.phtml</template></action>   
-    </reference>   
-    <reference name="content">   
-      <block type="featured/index" name="featured_index" template="featured/index.phtml"/>   
-    </reference>   
-  </featured_index_index>   
-</layout>   
-	
+    <default>
+        <reference name="head">
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>gremlintech/featured/js/slick.js</name>
+            </action>
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>gremlintech/featured/js/featured.js</name>
+            </action>
+            <action method="addItem">
+                <type>skin_css</type>
+                <name>gremlintech/featured/js/styles.css</name>
+            </action>
+        </reference>
+    </default>
+    <cms_index_index translate="label">
+        <reference name="default_home_page">
+            <block type="featured/featured" name="featured.featured" template="featured/featured.phtml"/>
+            <block type="featured/featured_new" name="featured.featured.new" as="featured.men.new"
+                   template="featured/newSlider.phtml">
+                <action method="setData">
+                    <name>gender</name>
+                    <value>Male</value>
+                </action>
+            </block>
+            <block type="featured/featured_new" name="featured.featured.new" as="featured.women.new"
+                   template="featured/newSlider.phtml">
+                <action method="setData">
+                    <name>gender</name>
+                    <value>Female</value>
+                </action>
+            </block>
+        </reference>
+    </cms_index_index>
+</layout>

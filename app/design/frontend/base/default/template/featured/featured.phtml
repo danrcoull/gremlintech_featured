@@ -1,101 +1,100 @@
-<?php $_helper = Mage::helper('catalog/category'); ?>
-<?php $_categories = $_helper->getStoreCategories(); ?>
-<div class="row">
-    <div class="small-12 large-12">
-    <div class="small-12">
-        <div class="page-title">
-            <h2>Featured Products</h2>
+<?php
 
-            <?php if (count($_categories) > 0): ?>
-                <div class="title-bar" data-responsive-toggle="cat-menu" data-hide-for="medium">
-                    <button class="menu-icon" type="button" data-toggle></button>
-                    <div class="title-bar-title">Categories</div>
-                </div>
-                <ul class="category vertical medium-horizontal menu" id="cat-menu">
-                    <?php $c = 0;
-                    foreach ($_categories as $_category):
-                        $c++; ?>
-                        <li data-cat-id="<?php echo $_category->getId(); ?>"
-                            class="<?php echo ($c == 1) ? 'active' : ''; ?>">
-                            <span><?php echo $_category->getName() ?></span>
-                        </li>
-                    <?php endforeach; ?>
+$cats = $this->getCategories();
+?>
+<div class="column">
+        <div class="small-12 block block-featured">
+            <div class="block-title">
+                <h3>Featured Products</h3>
 
-                </ul>
+                <?php if (count($cats) > 0): ?>
+                    <div class="title-bar" data-responsive-toggle="cat-menu" data-hide-for="medium">
+                        <button class="menu-icon" type="button" data-toggle></button>
+                        <div class="title-bar-title">Categories</div>
+                    </div>
+                    <ul class="category vertical medium-horizontal menu" id="cat-menu">
+                        <?php $c = 0;
+                        foreach ($cats as $_category):
+                            $c++; ?>
+                            <li data-cat-id="<?php echo $_category->getId(); ?>"
+                                class="<?php echo ($c == 1) ? 'active' : ''; ?>">
+                                <span><?php echo $_category->getName() ?></span>
+                            </li>
+                        <?php endforeach; ?>
 
-            <?php endif; ?>
-        </div>
-        <?php $c = 0;
-        foreach ($_categories as $_category):
-            $c++;
-            ?>
-            <div
-                class="featured-grid category-<?php echo $_category->getId(); ?> <?php echo ($c == 1) ? 'active' : ''; ?>">
-                <ul class="products-grid" data-equalizer>
+                    </ul>
+
+                <?php endif; ?>
+            </div>
+            <?php $c = 0;
+            foreach ($cats as $_category):
+                $c++;
+                ?>
+                <div
+                    class="block-content featured-grid category-<?php echo $_category->getId(); ?> <?php echo ($c == 1) ? 'active' : ''; ?>">
                     <?php
                     $collection = $this->getProductCollection($_category->getId());
+                    if($count = count($collection) > 0):
+                    ?>
+                    <ul class="products-grid slider-5" data-equalizer>
+                        <?php
+                        foreach ($collection as $_product) :
+                            $producthelper = Mage::helper('catalog/output');
+                            ?>
+                            <li class="featured-item item">
+                                <div class="wrapper">
+                                    <a href="<?php echo $_product->getProductUrl() ?>" class="product-image"
+                                       title="View <?php echo $_product->getName() ?> online">
+                                        <img
+                                            src="<?php echo $this->helper('catalog/image')->init($_product, 'image')->resize(250) ?>"
+                                            title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>"
+                                            alt="<?php echo $this->htmlEscape($_product->getName()) ?>"/>
+                                    </a>
 
-                    foreach ($collection as $_product) :
-
-                        $producthelper = Mage::helper('catalog/output');
-                        ?>
-                        <li class="item" data-equalizer-watch>
-                            <a href="<?php echo $_product->getProductUrl() ?>"
-                               title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>"
-                               class="product-image">
-                                <img
-                                    data-original="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize(270); ?>"
-                                    alt="Buy <?php echo $this->stripTags($_product->getName(), null, true) ?> from fashion threads boutique"
-                                    class="lazy"/>
-                                <noscript>
-                                    <img
-                                        src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize(270); ?>"
-                                        alt="Buy <?php echo $this->stripTags($_product->getName(), null, true) ?> from fashion threads boutique"/>
-                                </noscript>
-                            </a>
-
-                            <h4 class="product-name"><a href="<?php echo $_product->getProductUrl() ?>"
-                                                        title="<?php echo $this->stripTags($_product->getName(), null, true) ?>"><?php echo $producthelper->productAttribute($_product, $_product->getName(), 'name') ?></a>
-                            </h4>
-                            <?php if ($_product->getRatingSummary()): ?>
-                                <?php echo $this->getReviewsSummaryHtml($_product, 'short') ?>
-                            <?php endif; ?>
-                            <?php
-                            $productBlock = $this->getLayout()->createBlock('catalog/product_price');
-                            echo $productBlock->getPriceHtml($_product, true) ?>
-                            <div class="actions">
-                                <?php if ($_product->isSaleable()): ?>
-                                    <button type="button"
-                                            title="<?php echo Mage::helper('core')->quoteEscape($this->__('Add to Cart')) ?>"
-                                            class="button btn-cart"
-                                            onclick="setLocation('<?php echo Mage::helper('checkout/cart')->getAddUrl($_product) ?>')">
-                                        <span><span><?php echo $this->__('Add to Cart') ?></span></span></button>
-                                <?php else: ?>
-                                    <p class="availability out-of-stock">
-                                        <span><?php echo $this->__('Out of stock') ?></span></p>
-                                <?php endif; ?>
-                                <ul class="add-to-links">
-                                    <?php if ($this->helper('wishlist')->isAllow()) : ?>
-                                        <li><a href="<?php echo $this->helper('wishlist')->getAddUrl($_product) ?>"
-                                               class="link-wishlist"></a></li>
-                                    <?php endif; ?>
-                                    <?php if ($_compareUrl = Mage::helper('catalog/product_compare')->getAddUrl($_product)): ?>
-                                        <li><span class="separator">|</span> <a href="<?php echo $_compareUrl ?>"
-                                                                                class="link-compare"></a></li>
-                                    <?php endif; ?>
-                                </ul>
-                            </div>
-                        </li>
-                    <?php endforeach; ?>
-                </ul>
-            </div>
-        <?php endforeach; ?>
-    </div>
-    </div>
+                                    <div class="product-info">
+                                        <h5 class="product-name">
+                                            <a data-equalizer-watch href="<?php echo $_product->getProductUrl() ?>"
+                                               title="View <?php echo $_product->getName() ?> online"><?php echo $_product->getName() ?></a>
+                                        </h5>
+                                        <?php
+                                        echo $this->getPriceHtml($_product,true,'-featured');
+                                        ?>
+                                        <?php if ($_product->getRatingSummary()): ?>
+                                            <?php echo $this->getReviewsSummaryHtml($_product, 'short') ?>
+                                        <?php endif; ?>
+                                        <div class="actions">
+                                            <?php if ($_product->isSaleable()): ?>
+                                                <button type="button"
+                                                        title="<?php echo $this->quoteEscape($this->__('Add to Cart')) ?>"
+                                                        class="button btn-cart"
+                                                        onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>')">
+                                                    <?php echo $this->__('Add to Cart') ?></button>
+                                            <?php else: ?>
+                                                <p class="availability out-of-stock">
+                                                    <span><?php echo $this->__('Out of stock') ?></span></p>
+                                            <?php endif; ?>
+                                            <ul class="add-to-links">
+                                                <?php if ($this->helper('wishlist')->isAllow()) : ?>
+                                                    <li>
+                                                        <a href="<?php echo $this->getAddToWishlistUrl($_product) ?>"
+                                                           class="link-wishlist"><?php echo $this->__('Add to Wishlist') ?></a>
+                                                    </li>
+                                                <?php endif; ?>
+                                                <?php if ($_compareUrl = $this->getAddToCompareUrl($_product)): ?>
+                                                    <li><span class="separator">|</span> <a href="<?php echo $_compareUrl ?>"
+                                                                                            class="link-compare"><?php echo $this->__('Add to Compare') ?></a>
+                                                    </li>
+                                                <?php endif; ?>
+                                            </ul>
+                                        </div>
+                                    </div>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                    <?php else : ?>
+                        <p class="error">No Products in this collection</p>
+                    <?php endif; ?>
+                </div>
+            <?php endforeach; ?>
+        </div>
 </div>
-<script>
-    jQuery(document).ready(function(){
-        jQuery('.products-grid').foundation('_reflow');
-    })
-
-</script>

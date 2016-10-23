@@ -1,80 +1,87 @@
-<div class="small-12">
-    <div class="page-title">
-        <h2>New <?php echo ($this->getGender() == 'Male') ? 'Men' : 'Women'; ?> Products</h2>
+<div class="small-12 block-new">
+    <div class="block-title">
+        <h3>New <?php echo ($this->getGender() == 'Male') ? 'Men' : 'Women'; ?> Products</h3>
         <div class="slider-arrows slider-arrows-<?php echo ($this->getGender() == 'Male') ? 'men' : 'women'; ?>">
             <span>Drag OR </span>
             <button type="button" title="previous set" class="prev fa  fa-chevron-left" aria-hidden="true"></button>
             <button type="button" title="next set" class="next fa  fa-chevron-right" aria-hidden="true"></button>
         </div>
      </div>
-    <div class="slick-slider products-grid" id="<?php echo ($this->getGender() == 'Male') ? 'men-new' : 'women-new'; ?>" data-equalizer>
+    <div class="block-content block-new-products">
         <?php
         $collection = $this->getProductCollection($this->getGender());
-
+        if($count = count($collection) > 0) :
+        ?>
+            <ul class="products-grid slider-2" id="<?php echo ($this->getGender() == 'Male') ? 'men-new' : 'women-new'; ?>" data-equalizer>
+        <?php
         foreach ($collection as $_product) :
 
             $producthelper = Mage::helper('catalog/output');
             ?>
-            <div class="item" data-equalizer-watch>
-                <a href="<?php echo $_product->getProductUrl() ?>"
-                   title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>"
-                   class="product-image">
-                    <img
-                        data-original="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize(270); ?>"
-                        alt="Buy <?php echo $this->stripTags($_product->getName(), null, true) ?> from fashion threads boutique"
-                        class="lazy"/>
-                    <noscript>
+            <li class="new-item item">
+                <div class="wrapper">
+                    <a href="<?php echo $_product->getProductUrl() ?>" class="product-image"
+                       title="View <?php echo $_product->getName() ?> online">
                         <img
-                            src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize(270); ?>"
-                            alt="Buy <?php echo $this->stripTags($_product->getName(), null, true) ?> from fashion threads boutique"/>
-                    </noscript>
-                </a>
+                            src="<?php echo $this->helper('catalog/image')->init($_product, 'image')->resize(250) ?>"
+                            title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>"
+                            alt="<?php echo $this->htmlEscape($_product->getName()) ?>"/>
+                    </a>
 
-                <h4 class="product-name"><a href="<?php echo $_product->getProductUrl() ?>"
-                                            title="<?php echo $this->stripTags($_product->getName(), null, true) ?>"><?php echo $producthelper->productAttribute($_product, $_product->getName(), 'name') ?></a>
-                </h4>
-                <?php if ($_product->getRatingSummary()): ?>
-                    <?php echo $this->getReviewsSummaryHtml($_product, 'short') ?>
-                <?php endif; ?>
-                <?php
-                $productBlock = $this->getLayout()->createBlock('catalog/product_price');
-                echo $productBlock->getPriceHtml($_product, true) ?>
-                <div class="actions">
-                    <?php if ($_product->isSaleable()): ?>
-                        <button type="button"
-                                title="<?php echo Mage::helper('core')->quoteEscape($this->__('Add to Cart')) ?>"
-                                class="button btn-cart"
-                                onclick="setLocation('<?php echo Mage::helper('checkout/cart')->getAddUrl($_product) ?>')">
-                            <span><span><?php echo $this->__('Add to Cart') ?></span></span></button>
-                    <?php else: ?>
-                        <p class="availability out-of-stock">
-                            <span><?php echo $this->__('Out of stock') ?></span></p>
-                    <?php endif; ?>
-                    <ul class="add-to-links">
-                        <?php if ($this->helper('wishlist')->isAllow()) : ?>
-                            <li><a href="<?php echo $this->helper('wishlist')->getAddUrl($_product) ?>"
-                                   class="link-wishlist"></a></li>
+                    <div class="product-info">
+                        <h5 class="product-name">
+                            <a data-equalizer-watch href="<?php echo $_product->getProductUrl() ?>"
+                               title="View <?php echo $_product->getName() ?> online"><?php echo $_product->getName() ?></a>
+                        </h5>
+                        <?php
+                        echo $this->getPriceHtml($_product,true,'-new');
+                        ?>
+                        <?php if ($_product->getRatingSummary()): ?>
+                            <?php echo $this->getReviewsSummaryHtml($_product, 'short') ?>
                         <?php endif; ?>
-                        <?php if ($_compareUrl = Mage::helper('catalog/product_compare')->getAddUrl($_product)): ?>
-                            <li><span class="separator">|</span> <a href="<?php echo $_compareUrl ?>"
-                                                                    class="link-compare"></a></li>
-                        <?php endif; ?>
-                    </ul>
-                </div>
-            </div>
+                        <div class="actions">
+                            <?php if ($_product->isSaleable()): ?>
+                                <button type="button"
+                                        title="<?php echo $this->quoteEscape($this->__('Add to Cart')) ?>"
+                                        class="button btn-cart"
+                                        onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>')">
+                                    <?php echo $this->__('Add to Cart') ?></button>
+                            <?php else: ?>
+                                <p class="availability out-of-stock">
+                                    <span><?php echo $this->__('Out of stock') ?></span></p>
+                            <?php endif; ?>
+                            <ul class="add-to-links">
+                                <?php if ($this->helper('wishlist')->isAllow()) : ?>
+                                    <li>
+                                        <a href="<?php echo $this->getAddToWishlistUrl($_product) ?>"
+                                           class="link-wishlist"><?php echo $this->__('Add to Wishlist') ?></a>
+                                    </li>
+                                <?php endif; ?>
+                                <?php if ($_compareUrl = $this->getAddToCompareUrl($_product)): ?>
+                                    <li><span class="separator">|</span> <a href="<?php echo $_compareUrl ?>"
+                                                                            class="link-compare"><?php echo $this->__('Add to Compare') ?></a>
+                                    </li>
+                                <?php endif; ?>
+                            </ul>
+                        </div>
+                    </div>
+            </li>
         <?php endforeach; ?>
+    </ul>
+        <?php else : ?>
+            <p class="error">No Products in this collection</p>
+        <?php endif; ?>
     </div>
 </div>
 
 <script>
-    jQuery(document).ready(function(){
-        jQuery('.slick-slider').foundation('_reflow');
+    $j(document).ready(function(){
 
-        jQuery('.slider-arrows-<?php echo ($this->getGender() == 'Male') ? 'men' : 'women'; ?> button.next').click(function() {
-            jQuery("#<?php echo ($this->getGender() == 'Male') ? 'men-new' : 'women-new'; ?>").slick("slickNext");
+        $j('.slider-arrows-<?php echo ($this->getGender() == 'Male') ? 'men' : 'women'; ?> button.next').click(function() {
+            $j("#<?php echo ($this->getGender() == 'Male') ? 'men-new' : 'women-new'; ?>").slick("slickNext");
         });
-        jQuery('.slider-arrows-<?php echo ($this->getGender() == 'Male') ? 'men' : 'women'; ?> button.prev').click(function() {
-            jQuery("#<?php echo ($this->getGender() == 'Male') ? 'men-new' : 'women-new'; ?>").slick("slickPrev");
+        $j('.slider-arrows-<?php echo ($this->getGender() == 'Male') ? 'men' : 'women'; ?> button.prev').click(function() {
+            $j("#<?php echo ($this->getGender() == 'Male') ? 'men-new' : 'women-new'; ?>").slick("slickPrev");
         });
     })
 

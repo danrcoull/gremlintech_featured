@@ -1,0 +1,55 @@
+.block-title
+{
+  .slider-arrows {
+    position: absolute;
+    right: 0;
+    top: -5px;
+  }
+
+  .category
+  {
+    position: absolute;
+    right: 0px;
+    bottom: -1px;
+    margin: 0px;
+    li
+    {
+      cursor: pointer;
+      float: left;
+      margin-right: 35px;
+      font-size: 15px;
+      padding-bottom: 5px;
+      position: relative;
+      border-bottom: 1px solid transparent;
+      color:$font-grey;
+      text-transform: uppercase;
+      -o-transition: .5s;
+      -ms-transition: .5s;
+      -moz-transition: .5s;
+      -webkit-transition: .5s;
+      transition: .5s;
+
+      .cat-title
+      {
+        border-bottom: 0px solid #a2a2a2;
+        margin-bottom: 0px;
+        padding-bottom: 0px;
+      }
+
+      &:hover, &.active {
+        color:$primary-color;
+        border-bottom: 1px solid $primary-color;
+      }
+    }
+  }
+}
+
+.featured-grid
+{
+  display:none;
+  margin-bottom:15px;
+  &.active
+  {
+    display:block;
+  }
+}

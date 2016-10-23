@@ -1,5 +1,5 @@
 <?php
-class Gremlintech_Featured_Block_Featured_New extends Mage_Core_Block_Template{
+class Gremlintech_Featured_Block_Featured_New extends Mage_Catalog_Block_Product_Abstract{
 
 
     public function getProductCollection($gender=null)

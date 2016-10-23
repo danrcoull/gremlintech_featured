@@ -1,5 +1,28 @@
 <?php
-class Gremlintech_Featured_Block_Featured extends Mage_Core_Block_Template{
+class Gremlintech_Featured_Block_Featured extends Mage_Catalog_Block_Product_Abstract
+{
+
+
+    private $_categories;
+
+    public function __construct()
+    {
+        $this->setCategories();
+    }
+
+    public function setCategories()
+    {
+        $_helper = Mage::helper('catalog/category');
+        $this->_categories = $_helper->getStoreCategories();
+        return $this;
+    }
+
+    public function getCategories()
+    {
+        return $this->_categories;
+    }
+
+
 
     public function getProductCollection($catid)
     {

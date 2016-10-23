@@ -1,0 +1,44 @@
+.block-title .slider-arrows {
+    position: absolute;
+    right: 0;
+    top: -5px;
+}
+.block-title .category {
+    position: absolute;
+    right: 0px;
+    bottom: -1px;
+    margin: 0px;
+}
+.block-title .category li {
+    cursor: pointer;
+    float: left;
+    margin-right: 35px;
+    font-size: 15px;
+    padding-bottom: 5px;
+    position: relative;
+    border-bottom: 1px solid transparent;
+    color: #999999;
+    text-transform: uppercase;
+    -o-transition: .5s;
+    -ms-transition: .5s;
+    -moz-transition: .5s;
+    -webkit-transition: .5s;
+    transition: .5s;
+}
+.block-title .category li .cat-title {
+    border-bottom: 0px solid #a2a2a2;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+}
+.block-title .category li:hover, .block-title .category li.active {
+    color: #e74847;
+    border-bottom: 1px solid #e74847;
+}
+
+.featured-grid {
+    display: none;
+    margin-top: 20px;
+}
+.featured-grid.active {
+    display: block;
+}

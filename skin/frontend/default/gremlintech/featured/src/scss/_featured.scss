@@ -6,48 +6,77 @@
     top: -5px;
   }
 
-  .category
-  {
-    position: absolute;
-    right: 0px;
-    bottom: -1px;
-    margin: 0px;
-    li
-    {
-      cursor: pointer;
-      float: left;
-      margin-right: 35px;
-      font-size: 15px;
-      padding-bottom: 5px;
-      position: relative;
-      border-bottom: 1px solid transparent;
-      color:$font-grey;
-      text-transform: uppercase;
-      -o-transition: .5s;
-      -ms-transition: .5s;
-      -moz-transition: .5s;
-      -webkit-transition: .5s;
-      transition: .5s;
+  @include breakpoint(small) {
+    .featured-categories-wrapper {
+      display: block !important;
+      position: absolute;
+      right: 0;
+      top: 0;
 
-      .cat-title
-      {
-        border-bottom: 0px solid #a2a2a2;
-        margin-bottom: 0px;
-        padding-bottom: 0px;
-      }
+      & > li {
+        &.is-dropdown-submenu-parent {
+          & > a {
+            color: $font-grey;
+            padding: 5px 30px;
+            &:after {
+              border-color: $primary-color transparent transparent;
+            }
+          }
 
-      &:hover, &.active {
-        color:$primary-color;
-        border-bottom: 1px solid $primary-color;
+          &:hover {
+            background: $white;
+            & > a {
+              color: $primary-color;
+            }
+          }
+
+          & > .is-dropdown-submenu {
+            & > li {
+
+              &:hover {
+                background: #eee;
+              }
+
+              & > span {
+                padding-left: 10px;
+              }
+            }
+          }
+        }
       }
     }
   }
+
+  @include breakpoint(medium up) {
+    .category {
+      display: block !important;
+      position: absolute;
+      right: 0;
+      top: 3px;
+
+      &.menu
+      {
+        & > li
+        {
+          color: $font-grey;
+          font-size:15px;
+          padding: 0 10px;
+
+          &:hover {
+            color: $primary-color;
+            border-bottom:solid 1px $primary-color;
+            cursor: hand;
+          }
+        }
+      }
+    }
+  }
+
 }
 
 .featured-grid
 {
   display:none;
-  margin-bottom:15px;
   &.active
   {
     display:block;

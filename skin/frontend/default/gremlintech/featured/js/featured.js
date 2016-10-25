@@ -1,3 +1,41 @@
+var featuredCatLinksMobile = {
+
+    topLinks: null,
+    topLinksWrapper: null,
+    topLinkWrap:'<ul class="dropdown menu featured-categories-wrapper" data-dropdown-menu><li></li></ul>',
+    topLinkBefore: '<a href="" class="cats-menu">Categories Menu</a>',
+    dropdown : null,
+
+    init : function() {
+        this.topLinks = $j('.featured-categories');
+        this.topLinksWrapper = $j('.featured-categories-wrapper');
+    },
+    createDropdown: function() {
+        if(this.topLinksWrapper.length  == 0 && this.topLinks.length > 0) {
+
+            //wrap the structure
+            this.topLinks.wrap(this.topLinkWrap);
+            this.topLinksWrapper = $j('.featured-categories-wrapper');
+            //add a new a tag for dropdown
+            $j('.featured-categories-wrapper >  li > ul').before(this.topLinkBefore);
+
+            //initialize foundation dropdown on the element
+            this.dropdown = new Foundation.DropdownMenu(this.topLinksWrapper);
+        }
+    },
+
+    destroyDropdown: function(){
+        this.topLinksWrapper = $j('.featured-categories-wrapper');
+
+        if(this.topLinksWrapper.length  > 0 && this.topLinks.length > 0) {
+            this.topLinksWrapper.foundation('destroy');
+            $j('.featured-categories-wrapper .cats-menu').remove();
+            this.topLinks.unwrap().unwrap().removeClass('first-sub vertical');
+        }
+
+    }
+};
+
 $j(document).ready(function(){
     $j('.slider-5').each(function() {
         $j(this)
@@ -96,5 +134,7 @@ $j(document).ready(function(){
 
     });
 
+    featuredCatLinksMobile.init();
+    featuredCatLinksMobile.createDropdown();
 
 });

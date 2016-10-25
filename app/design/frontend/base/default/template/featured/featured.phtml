@@ -3,38 +3,34 @@
 $cats = $this->getCategories();
 ?>
 <div class="column">
-        <div class="small-12 block block-featured">
-            <div class="block-title">
-                <h3>Featured Products</h3>
+    <div class="small-12 block block-featured">
+        <div class="block-title">
+            <h3>Featured Products</h3>
 
-                <?php if (count($cats) > 0): ?>
-                    <div class="title-bar" data-responsive-toggle="cat-menu" data-hide-for="medium">
-                        <button class="menu-icon" type="button" data-toggle></button>
-                        <div class="title-bar-title">Categories</div>
-                    </div>
-                    <ul class="category vertical medium-horizontal menu" id="cat-menu">
-                        <?php $c = 0;
-                        foreach ($cats as $_category):
-                            $c++; ?>
-                            <li data-cat-id="<?php echo $_category->getId(); ?>"
-                                class="<?php echo ($c == 1) ? 'active' : ''; ?>">
-                                <span><?php echo $_category->getName() ?></span>
-                            </li>
-                        <?php endforeach; ?>
+            <?php if (count($cats) > 0): ?>
+                <ul class="featured-categories category vertical medium-horizontal menu" id="cat-menu">
+                    <?php $c = 0;
+                    foreach ($cats as $_category):
+                        $c++; ?>
+                        <li data-cat-id="<?php echo $_category->getId(); ?>"
+                            class="<?php echo ($c == 1) ? 'active' : ''; ?>">
+                            <span><?php echo $_category->getName() ?></span>
+                        </li>
+                    <?php endforeach; ?>
 
-                    </ul>
+                </ul>
 
-                <?php endif; ?>
-            </div>
-            <?php $c = 0;
-            foreach ($cats as $_category):
-                $c++;
-                ?>
-                <div
-                    class="block-content featured-grid category-<?php echo $_category->getId(); ?> <?php echo ($c == 1) ? 'active' : ''; ?>">
-                    <?php
-                    $collection = $this->getProductCollection($_category->getId());
-                    if($count = count($collection) > 0):
+            <?php endif; ?>
+        </div>
+        <?php $c = 0;
+        foreach ($cats as $_category):
+            $c++;
+            ?>
+            <div
+                class="block-content featured-grid category-<?php echo $_category->getId(); ?> <?php echo ($c == 1) ? 'active' : ''; ?>">
+                <?php
+                $collection = $this->getProductCollection($_category->getId());
+                if ($count = count($collection) > 0):
                     ?>
                     <div class="products-grid products-grid--max-5-col" data-equalizer>
                         <?php
@@ -57,7 +53,7 @@ $cats = $this->getCategories();
                                                title="View <?php echo $_product->getName() ?> online"><?php echo $_product->getName() ?></a>
                                         </h5>
                                         <?php
-                                        echo $this->getPriceHtml($_product,true,'-featured');
+                                        echo $this->getPriceHtml($_product, true, '-featured');
                                         ?>
                                         <?php if ($_product->getRatingSummary()): ?>
                                             <?php echo $this->getReviewsSummaryHtml($_product, 'short') ?>
@@ -81,20 +77,22 @@ $cats = $this->getCategories();
                                                     </li>
                                                 <?php endif; ?>
                                                 <?php if ($_compareUrl = $this->getAddToCompareUrl($_product)): ?>
-                                                    <li><span class="separator">|</span> <a href="<?php echo $_compareUrl ?>"
-                                                                                            class="link-compare"><?php echo $this->__('Add to Compare') ?></a>
+                                                    <li><span class="separator">|</span> <a
+                                                            href="<?php echo $_compareUrl ?>"
+                                                            class="link-compare"><?php echo $this->__('Add to Compare') ?></a>
                                                     </li>
                                                 <?php endif; ?>
                                             </ul>
                                         </div>
                                     </div>
+                                </div>
                             </div>
                         <?php endforeach; ?>
                     </div>
-                    <?php else : ?>
-                        <p class="error">No Products in this collection</p>
-                    <?php endif; ?>
-                </div>
-            <?php endforeach; ?>
-        </div>
+                <?php else : ?>
+                    <p class="error">No Products in this collection</p>
+                <?php endif; ?>
+            </div>
+        <?php endforeach; ?>
+    </div>
 </div>

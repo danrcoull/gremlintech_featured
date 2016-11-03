@@ -53,7 +53,7 @@ class Gremlintech_Featured_Block_Featured extends Mage_Catalog_Block_Product_Abs
 
         //lets get the number
         $collection->getSelect()->order(new Zend_Db_Expr('RAND()'));
-        $collection->setPageSize(12) ->setCurPage(1);
+        $collection->setPageSize(15) ->setCurPage(1);
 
         $collection->getSelect()
             ->group('e.entity_id');

@@ -1,4 +1,4 @@
-<div class="small-12 block-new">
+<div class="block-new">
     <div class="block-title">
         <h3>New <?php echo ($this->getGender() == 'Male') ? 'Men' : 'Women'; ?> Products</h3>
 
@@ -76,18 +76,19 @@
             <?php endif; ?>
         </div>
     </div>
+
+
+    <script>
+        $j(document).ready(function () {
+
+            $j('.slider-arrows-<?php echo ($this->getGender() == 'Male') ? 'men' : 'women'; ?> button.next').click(function () {
+                $j("#<?php echo ($this->getGender() == 'Male') ? 'men-new' : 'women-new'; ?>").slick("slickNext");
+            });
+            $j('.slider-arrows-<?php echo ($this->getGender() == 'Male') ? 'men' : 'women'; ?> button.prev').click(function () {
+                $j("#<?php echo ($this->getGender() == 'Male') ? 'men-new' : 'women-new'; ?>").slick("slickPrev");
+            });
+        })
+
+
+    </script>
 </div>
-
-<script>
-    $j(document).ready(function () {
-
-        $j('.slider-arrows-<?php echo ($this->getGender() == 'Male') ? 'men' : 'women'; ?> button.next').click(function () {
-            $j("#<?php echo ($this->getGender() == 'Male') ? 'men-new' : 'women-new'; ?>").slick("slickNext");
-        });
-        $j('.slider-arrows-<?php echo ($this->getGender() == 'Male') ? 'men' : 'women'; ?> button.prev').click(function () {
-            $j("#<?php echo ($this->getGender() == 'Male') ? 'men-new' : 'women-new'; ?>").slick("slickPrev");
-        });
-    })
-
-
-</script>

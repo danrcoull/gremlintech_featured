@@ -17,18 +17,19 @@
              data-equalizer>
             <?php
             foreach ($collection as $_product) :
-
                 $producthelper = Mage::helper('catalog/output');
+                $_product = $product = $_product->load();
                 ?>
                 <div class="new-item item">
                     <div class="wrapper">
                         <a href="<?php echo $_product->getProductUrl() ?>" class="product-image"
                            title="View <?php echo $_product->getName() ?> online">
                             <img
-                                src="<?php echo $this->helper('catalog/image')->init($_product, 'image')->resize(250) ?>"
-                                title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>"
-                                alt="<?php echo $this->htmlEscape($_product->getName()) ?>"/>
+                                src="<?php echo $this->helper('catalog/image')->init($_product, 'image')->resize(250); ?>"
+                                alt="<?php echo $this->escapeHtml($_product->getName() . " ".$this->getImageLabel($_product, 'image')); ?>"
+                                title="<?php echo $this->escapeHtml($_product->getName() . " ".$this->getImageLabel($_product, 'image')); ?>" />
                         </a>
+
 
                         <div class="product-info">
                             <h5 class="product-name">

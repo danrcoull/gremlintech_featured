@@ -28,6 +28,23 @@
                                 src="<?php echo $this->helper('catalog/image')->init($_product, 'image')->resize(250); ?>"
                                 alt="<?php echo $this->escapeHtml($_product->getName() . " ".$this->getImageLabel($_product, 'image')); ?>"
                                 title="<?php echo $this->escapeHtml($_product->getName() . " ".$this->getImageLabel($_product, 'image')); ?>" />
+                            <?php
+                            $now = date("Y-m-d");
+                            $newsFrom= substr($_product->getData('news_from_date'),0,10);
+                            $newsTo=  substr($_product->getData('news_to_date'),0,10);
+                            if($_product->getFinalPrice() < $_product->getPrice() || $now>=$newsFrom && $now<=$newsTo): ?>
+                                <div class="promotion">
+                                    <?php
+                                    if ($now>=$newsFrom && $now<=$newsTo): ?>
+                                        <span class="new-product">NEW</span>
+                                    <?php endif; ?>
+                                    <?php if($_product->getFinalPrice() < $_product->getPrice()): ?>
+                                        <?php $_savePercent = 100 - round(($_finalPrice / $_price)*100); ?>
+                                        <span class="discount"><?php echo $_savePercent; ?>% OFF</span>
+                                    <?php endif; ?>
+                                </div>
+                            <?php endif; ?>
+
                         </a>
 
 
